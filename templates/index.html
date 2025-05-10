@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vesak Card Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to bottom, #fceabb, #f8b500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            flex-direction: column;
+        }
+        .logo-top {
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #f8b500;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #f8b500;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #e09e00;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+        .card-preview {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .preview-image {
+            max-width: 100%;
+            margin-top: 15px;
+        }
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <img src="https://mahamevnawacollege.lk/wp-content/uploads/2022/03/11-07-1.png" alt="Logo" class="logo-top">
+
+    <div class="container">
+        <h2>Vesak Card Generator</h2>
+        <form id="vesakForm">
+            <label for="to">To:</label>
+            <input type="text" id="to" name="to" required placeholder="e.g. My Brother">
+
+            <label for="from">From:</label>
+            <input type="text" id="from" name="from" required placeholder="e.g. Amma">
+
+            <button type="button" id="previewBtn">🎁 Preview My Card</button>
+            <button type="button" id="downloadBtn" style="display: none;">⬇️ Download My Card</button>
+        </form>
+
+        <div class="card-preview" id="cardPreview">
+            <img id="previewImage" class="preview-image" src="" alt="Card Preview">
+        </div>
+
+        <div class="footer">
+            Designed with ❤️ for Vesak 2025
+        </div>
+    </div>
+
+    <script>
+        const previewBtn = document.getElementById("previewBtn");
+        const downloadBtn = document.getElementById("downloadBtn");
+        const previewImage = document.getElementById("previewImage");
+        const cardPreview = document.getElementById("cardPreview");
+
+        previewBtn.addEventListener("click", () => {
+            const to = document.getElementById("to").value;
+            const from = document.getElementById("from").value;
+            const imageUrl = `/generate_image?to=${encodeURIComponent(to)}&from=${encodeURIComponent(from)}`;
+            previewImage.src = imageUrl;
+            cardPreview.style.display = "block";
+            downloadBtn.style.display = "inline-block";
+        });
+
+        downloadBtn.addEventListener("click", () => {
+            const link = document.createElement('a');
+            link.href = previewImage.src;
+            link.download = 'vesak_card.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>
